@@ -1,0 +1,17 @@
+{
+  "name": "mlp-ts",
+  "version": "1.0.0",
+  "main": "main.ts",
+  "repository": "https://github.com/TheoCaldas/mlp-ts.git",
+  "author": "Theo Caldas <theocaldas28@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@types/node": "^22.14.0",
+    "tsx": "^4.19.3",
+    "vitest": "^3.1.1"
+  }
+}

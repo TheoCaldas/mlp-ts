@@ -36,7 +36,7 @@ export const initTraining = (data: number[][], labels: number[], learningRate: n
 }
 
 // Train the perceptron using the given data and labels
-export const train = (model: SupervisedPerceptron): SupervisedPerceptron => {
+export const train = (model: SupervisedPerceptron, verbose: boolean = false): SupervisedPerceptron => {
     for (let i = 0; i < model.itemCount; i++) {
         const inputs = model.data[i];
         const expectedOutput = model.labels[i];
@@ -58,14 +58,16 @@ export const train = (model: SupervisedPerceptron): SupervisedPerceptron => {
         model.perceptron = perceptron;
 
         // Optional: Log the training process
-        console.log(`Training item ${i + 1}/${model.itemCount}`);
-        console.log(`Inputs: ${inputs}`);
-        console.log(`Expected Output: ${expectedOutput}`);
-        console.log(`Actual Output: ${output}`);
-        console.log(`Weights: ${perceptron.weights}`);
-        console.log(`Bias: ${perceptron.bias}`);
-        console.log(`Error: ${error}`);
-        console.log("-----------------------------");
+        if (verbose){
+            console.log(`Training item ${i + 1}/${model.itemCount}`);
+            console.log(`Inputs: ${inputs}`);
+            console.log(`Expected Output: ${expectedOutput}`);
+            console.log(`Actual Output: ${output}`);
+            console.log(`Weights: ${perceptron.weights}`);
+            console.log(`Bias: ${perceptron.bias}`);
+            console.log(`Error: ${error}`);
+            console.log("-----------------------------");
+        }
     }
     return model;
 }
@@ -81,31 +83,35 @@ export const predict = (model: SupervisedPerceptron, item: number[]): number => 
 }
 
 // Test the model with given data and labels
-export const test = (model: SupervisedPerceptron, data: number[][], labels: number[]): number => {
+export const test = (model: SupervisedPerceptron, data: number[][], labels: number[], verbose: boolean = false): number => {
     if (data.length !== labels.length) {
         throw new Error("Data and labels must have the same length");
     }
+    if (verbose) console.log("Testing the model...\n");
 
     let score = 0;
-    console.log("Testing the model...\n");
     for (let i = 0; i < data.length; i++) {
         const prediction = predict(model, data[i]);
-        // console.log(`Predict item ${i + 1}/${data.length}\n`);
         
         if (prediction !== labels[i]) {
-            console.log("Wrong Prediction!\n");
-            console.log(`Inputs: ${data[i]}`);
-            console.log(`Expected Output: ${labels[i]}`);
-            console.log(`Predicted Output: ${prediction}\n`);
+            if (verbose){
+                console.log("Wrong Prediction!\n");
+                console.log(`Inputs: ${data[i]}`);
+                console.log(`Expected Output: ${labels[i]}`);
+                console.log(`Predicted Output: ${prediction}\n`);
+            }
         } else {
             score++;
         }
 
-        console.log(`Current Score: ${score}/${i + 1}`);
-        console.log("-----------------------------");
+        if (verbose){
+            console.log(`Current Score: ${score}/${i + 1}`);
+            console.log("-----------------------------");
+        }
     }
 
     const accuracy = score / data.length;
-    console.log(`\nFinal Accuracy: ${accuracy}`);
+    if (verbose) console.log(`\nFinal Accuracy: ${accuracy}`);
+    
     return accuracy;
 }

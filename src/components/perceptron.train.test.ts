@@ -59,6 +59,7 @@ describe("Perceptron Training Module", () => {
         expect(model.perceptron.bias).not.toBe(initialBias); // Bias should be updated
     });
 
+    // This test has a low probability of not passing
     it("should predict the correct output after training", () => {
         const data = [
             [0, 0],
@@ -103,9 +104,6 @@ describe("Perceptron Training Module", () => {
 
         let model = initTraining(data, labels, learningRate);
         model = train(model);
-
-        // expect(predict(model, [0.9, 0.7])).toBe(1);
-        // expect(predict(model, [0.1, 0.05])).toBe(0);
 
         expect(predict(model, [1, 1])).toBe(1);
         expect(predict(model, [0, 0])).toBe(0);

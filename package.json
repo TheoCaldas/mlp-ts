@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsx src/main.ts",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@types/node": "^22.14.0",

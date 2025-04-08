@@ -1,5 +1,6 @@
-import { Perceptron, initRandom, updateOutput } from "./perceptron";
+import { Perceptron, init, initRandom, updateOutput } from "./perceptron";
 import { perceptronActivation } from "./activation";
+import fs from "fs";
 
 // Supervised training of a single perceptron
 // Data is an array of items which is an array of inputs, labels are the expected outputs
@@ -114,4 +115,28 @@ export const test = (model: SupervisedPerceptron, data: number[][], labels: numb
     if (verbose) console.log(`\nFinal Accuracy: ${accuracy}`);
     
     return accuracy;
+}
+
+export const exportModel = (model: SupervisedPerceptron, filePath: string) => {
+    const modelData = {
+        weights: model.perceptron.weights,
+        bias: model.perceptron.bias,
+    };
+    const jsonString = JSON.stringify(modelData, null, 2);
+    fs.writeFileSync(filePath, jsonString);
+    console.log(`Model exported to ${filePath}`);
+}
+
+export const importModel = (filePath: string): SupervisedPerceptron => {
+    const jsonString = fs.readFileSync(filePath, 'utf-8');
+    const modelData = JSON.parse(jsonString);
+    const perceptron = init(modelData.weights, modelData.bias, perceptronActivation);
+    console.log(`Model imported from ${filePath}`);
+    return {
+        data: [],
+        labels: [],
+        perceptron: perceptron,
+        learningRate: 0,
+        itemCount: 0,
+    };
 }

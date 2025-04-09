@@ -1,4 +1,4 @@
-import { parseJSON, extractInputLabel, normalize, shuffle, split, Item } from "./data";
+import { parseJSON, extractInputLabel, normalize, shuffle, split, Item, fixedShuffle } from "./data";
 import { describe, it, expect } from 'vitest';
 
 describe("Data module", () => {
@@ -49,6 +49,20 @@ describe("Data module", () => {
             const shuffledData = shuffle(mockData);
             expect(shuffledData).toHaveLength(mockData.length);
             expect(shuffledData).toEqual(expect.arrayContaining(mockData));
+        });
+    });
+
+    describe("fixedShuffle", () => {
+        it("should shuffle the data array with a fixed seed", () => {
+            const seed = "123";
+            const fixedShuffledData1 = fixedShuffle(mockData, seed);
+            const fixedShuffledData2 = fixedShuffle(mockData, seed);
+
+            expect(mockData).not.toEqual(fixedShuffledData1);
+            expect(fixedShuffledData1).toEqual(fixedShuffledData2);
+
+            expect(fixedShuffledData1).toHaveLength(mockData.length);
+            expect(fixedShuffledData1).toEqual(expect.arrayContaining(mockData));
         });
     });
 

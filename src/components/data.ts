@@ -1,4 +1,5 @@
 import fs from "fs";
+import Rand from 'rand-seed';
 
 // Each item has x and y coordinates and a color label
 export type Item = {x: number, y: number, color: string};
@@ -34,7 +35,15 @@ export const normalize = (rawData: Item[]): Item[] => {
 
 // Shuffle the data array randomly
 export const shuffle = (data: Item[]): Item[] => {
-  return data.sort(() => Math.random() - 0.5);
+  const shuffled = data.slice();
+  return shuffled.sort(() => Math.random() - 0.5);
+}
+
+// Shuffle the data array given a seed
+export const fixedShuffle = (data: Item[], seed: string): Item[] => {
+  const rand = new Rand(seed);
+  const shuffled = data.slice();
+  return shuffled.sort(() => rand.next() - 0.5);
 }
 
 // Split the data into training and testing sets based on a ratio

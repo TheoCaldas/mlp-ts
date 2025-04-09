@@ -1,4 +1,4 @@
-import { initTraining, train, predict } from "./perceptron.train";
+import { initTraining, train, predict, importModel, exportModel } from "./perceptron.train";
 import { describe, it, expect } from 'vitest';
 
 describe("Perceptron Training Module", () => {
@@ -107,5 +107,37 @@ describe("Perceptron Training Module", () => {
 
         expect(predict(model, [1, 1])).toBe(1);
         expect(predict(model, [0, 0])).toBe(0);
+    });
+
+    it("should export and import a trained perceptron model correctly", () => {
+        const modelPath = 'src/models/mock.json';
+
+        const data = [
+            [0, 0],
+            [0, 1],
+            [1, 0],
+            [1, 1],
+        ];
+        const labels = [0, 0, 0, 1];
+        const learningRate = 0.1;
+
+        let model = initTraining(data, labels, learningRate);
+        model = train(model);
+
+        const weights = model.perceptron.weights;
+        const bias = model.perceptron.bias;
+
+        const prediction = predict(model, [1, 1]);
+
+        exportModel(model, modelPath);
+
+        const importedModel = importModel(modelPath);
+
+        expect(importedModel).toBeDefined();
+        expect(importedModel.perceptron).toBeDefined();
+        expect(importedModel.perceptron.weights).toEqual(weights);
+        expect(importedModel.perceptron.bias).toBe(bias);
+
+        expect(predict(importedModel, [1, 1])).toEqual(prediction);
     });
 });

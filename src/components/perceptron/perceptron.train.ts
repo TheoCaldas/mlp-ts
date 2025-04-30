@@ -1,5 +1,5 @@
 import { Perceptron, init, initRandom, updateOutput } from "./perceptron";
-import { perceptronActivation } from "./activation";
+import { perceptronActivation } from "../activation";
 import fs from "fs";
 
 // Supervised training of a single perceptron

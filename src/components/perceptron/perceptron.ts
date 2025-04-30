@@ -1,5 +1,5 @@
-import { dotProduct } from './math';
-import { ActivationFunction } from './activation';
+import { dotProduct } from '../math';
+import { ActivationFunction } from '../activation';
 
 // The perceptron has inputs, weights, bias, output and activation function
 export type Perceptron = {

@@ -1,15 +1,16 @@
-import { exportModel, importModel, initTraining, test, train } from "./components/perceptron.train";
+import { exportModel, importModel, initTraining, test, train } from "./components/perceptron/perceptron.train";
 import { parseJSON, normalize, shuffle, split, extractInputLabel, fixedShuffle } from "./components/data";
 
 // Hyperparameters
-const dataFilePath = "src/datasets/points/data1.json";
-const modelFilePath = "src/models/perceptron.json";
+const dataFilePath = "src/datasets/points/data3.json";
+const modelFilePath = "src/models/perceptron3.json";
 const splitRatio = 0.8;
 const learningRate = 0.1;
 
 // Handle dataset
 const data = parseJSON(dataFilePath);
 const normalizedData = normalize(data);
+// const shuffledData = shuffle(normalizedData);
 const shuffledData = fixedShuffle(normalizedData, '123');
 const { trainData, testData } = split(shuffledData, splitRatio);
 const { data: trainInputs, labels: trainLabels } = extractInputLabel(trainData);

@@ -4,3 +4,7 @@ export type ActivationFunction = (x: number) => number;
 export const perceptronActivation: ActivationFunction = (x: number) => {
     return x > 0 ? 1 : 0;
 };
+
+export const sigmoid: ActivationFunction = (x: number) => {
+    return 1 / (1 + Math.exp(-x));
+};

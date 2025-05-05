@@ -14,3 +14,7 @@ export const sigmoid: ActivationFunction = (x: number) => {
 export const sigmoidDecision = (x: number, t: number): number => {
     return x > t ? 1 : -1;
 }
+
+export const sigmoidDerivative: ActivationFunction = (x: number) => {
+    return sigmoid(x) * (1 - sigmoid(x));
+};

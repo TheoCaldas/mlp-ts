@@ -8,13 +8,8 @@ export const perceptronActivation: ActivationFunction = (x: number) => {
 export const sigmoid: ActivationFunction = (x: number) => {
     return 1 / (1 + Math.exp(-x));
 };
-// Returns the final decision for sigmoid output
-// If the output is greater than the threshold, return 1
-// If the output is less than or equal to the threshold, return -1
-export const sigmoidDecision = (x: number, t: number): number => {
-    return x > t ? 1 : -1;
-}
 
-export const sigmoidDerivative: ActivationFunction = (x: number) => {
-    return sigmoid(x) * (1 - sigmoid(x));
+
+export const sigmoidDerivative: ActivationFunction = (activationOutput: number) => {
+    return activationOutput * (1 - activationOutput);
 };

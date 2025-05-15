@@ -1,0 +1,15 @@
+{
+  "outputLayerBias": -0.02452903451333817,
+  "outputLayerWeights": [
+    0.49294714080358254
+  ],
+  "hiddenLayerBias": [
+    -5.485334030398315
+  ],
+  "hiddenLayerWeights": [
+    [
+      -1.72871126285227,
+      8.887999933724101
+    ]
+  ]
+}

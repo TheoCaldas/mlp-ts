@@ -1,4 +1,4 @@
-import { initSLP, initRandomSLP, forwardPropagationSLP, backPropagationSLP, initSLPGrads } from './slp';
+import { initSLP, initRandomSLP, forwardPropagationSLP, backpropagationSLP, initSLPGrads } from './slp';
 import { initRandom, init } from '../perceptron/perceptron';
 import { sigmoid } from '../activation';
 import { describe, it, expect } from 'vitest';
@@ -137,19 +137,19 @@ describe('Single Layer Perceptron Module', () => {
         const outputLayer = init([0, 0.5, 1], 0, sigmoid);
         const expectedOutput = 1;
         const expectedGrads = {
-            outputLayerBias: 0.23,
-            outputLayerWeights: [0.18, 0.18, 0.20],
-            hiddenLayerBias: [0.25, 0.24, 0.25],
+            outputLayerBias: -0.07,
+            outputLayerWeights: [-0.06, -0.06, -0.06],
+            hiddenLayerBias: [0, 0, 0],
             hiddenLayerWeights: [
-                [0.12, 0.25],
-                [0.12, 0.24],
-                [0.12, 0.25],
+                [0, 0],
+                [0, 0],
+                [0, 0],
             ],
         };
 
         const slp = initSLP(hiddenLayer, outputLayer);
         const updatedSLP = forwardPropagationSLP(slp, inputs);
-        const {slp: _, grads} = backPropagationSLP(updatedSLP, expectedOutput);
+        const {slp: _, grads} = backpropagationSLP(updatedSLP, expectedOutput);
 
         expect(grads.outputLayerBias).toBeCloseTo(expectedGrads.outputLayerBias, 1);
         expectedGrads.outputLayerWeights.forEach((weight, index) => {

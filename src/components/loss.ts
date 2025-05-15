@@ -5,6 +5,6 @@ export const squareLoss: LossFunction = (output: number, expected: number) => {
 };
 
 export const squareLossDerivative = (output: number, expected: number) => {
-    return 2 * (expected - output);
+    return 2 * (output - expected);
 };
 

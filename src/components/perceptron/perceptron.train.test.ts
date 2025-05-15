@@ -1,5 +1,6 @@
 import { initTraining, train, predict, importModel, exportModel } from "./perceptron.train";
 import { describe, it, expect } from 'vitest';
+import fs from "fs";
 
 describe("Perceptron Training Module", () => {
     it("should initialize a supervised perceptron correctly", () => {
@@ -110,7 +111,7 @@ describe("Perceptron Training Module", () => {
     });
 
     it("should export and import a trained perceptron model correctly", () => {
-        const modelPath = 'src/models/mock.json';
+        const modelPath = 'src/models/perceptron/mock.json';
 
         const data = [
             [0, 0],
@@ -139,5 +140,7 @@ describe("Perceptron Training Module", () => {
         expect(importedModel.perceptron.bias).toBe(bias);
 
         expect(predict(importedModel, [1, 1])).toEqual(prediction);
+
+        fs.unlinkSync(modelPath);
     });
 });

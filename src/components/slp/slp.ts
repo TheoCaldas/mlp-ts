@@ -83,6 +83,7 @@ export const forwardPropagationSLP = (slp: SingleLayerPerceptron, inputs: number
         if (perceptron.output === undefined) {
             throw new Error(`Output for hidden layer perceptron ${i} is undefined`);
         }
+        // console.log(`Hidden Layer Output (${i}): `, perceptron.output);
         hiddenLayerOutputs.push(perceptron.output);
         slp.hiddenLayer[i] = perceptron;
     }
@@ -93,14 +94,14 @@ export const forwardPropagationSLP = (slp: SingleLayerPerceptron, inputs: number
     }
     slp.outputLayer = perceptron;
     slp.output = perceptron.output;
-
+    // console.log(`Output Layer Output: `, slp.output);
     return slp;
 }
 
 // One setp backpropagation for SLP
 // Returns the updated SLP and gradients
 // Does not update the weights and bias
-export const backPropagationSLP = (
+export const backpropagationSLP = (
     slp: SingleLayerPerceptron, 
     expectedOutput: number, 
     verbose: boolean = false): 
@@ -116,17 +117,13 @@ export const backPropagationSLP = (
     // Initialize local gradients
     const grads = initSLPGrads(slp.nInputs, slp.hiddenLayer.length);
 
-    // Calculate the output error
-    const outputError = squareLoss(slp.output, expectedOutput);
-    if (verbose) console.log("Output error: ", outputError);
-
     // Calculate the output gradient
     const outputGrad = squareLossDerivative(slp.output, expectedOutput);
-    const sigmoidGrad = sigmoidDerivative(outputGrad);
+    const sigmoidGrad = outputGrad * sigmoidDerivative(slp.output);
 
     // Calculate the bias gradient for the output layer
     const biasGrad = sigmoidGrad;
-    if (verbose) console.log("Bias Grad: ", biasGrad);
+    if (verbose) console.log("Output Layer Bias Grad: ", biasGrad);
     grads.outputLayerBias = biasGrad;
 
     // Calculate the weights gradients for the output layer
@@ -141,7 +138,7 @@ export const backPropagationSLP = (
     
     for (let i = 0; i < slp.hiddenLayer.length; i++) {
         // Calculate the bias gradient for the hidden layer
-        const hiddenBiasGrad = sigmoidDerivative(sigmoidGrad * slp.outputLayer.weights[i]); 
+        const hiddenBiasGrad = sigmoidGrad * sigmoidDerivative(slp.hiddenLayer[i].output!) * slp.outputLayer.weights[i]; 
         if (verbose) console.log(`Hidden Layer Bias Grad (${i}): `, hiddenBiasGrad);
         grads.hiddenLayerBias[i] = hiddenBiasGrad;
         

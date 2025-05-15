@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsx src/main.ts",
+    "start-slp": "tsx src/main.slp.ts",
     "test": "vitest run"
   },
   "dependencies": {

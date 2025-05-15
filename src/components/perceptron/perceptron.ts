@@ -29,6 +29,16 @@ export const initRandom = (nInputs: number, func: ActivationFunction): Perceptro
     return init(weights, bias, func);
 }
 
+// Initialize a perceptron with Xavier initialization for weights and zero bias
+export const initXavier = (nInputs: number, nOuputs: number, func: ActivationFunction): Perceptron =>  {
+    const weights = Array.from({ length: nInputs }, () => {
+        const limit = Math.sqrt(6 / (nInputs + nOuputs));
+        return Math.random() * 2 * limit - limit; // Uniform(-limit, limit)
+    });
+    const bias = 0;
+    return init(weights, bias, func);
+}
+
 // Update the perceptron output based on given inputs and current weights
 // The output is calculated as the dot product of inputs and weights plus the bias
 export const updateOutput = (perceptron: Perceptron, inputs: number[]): Perceptron => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { init, initRandom, updateOutput } from './perceptron';
+import { init, initRandom, initXavier, updateOutput } from './perceptron';
 import { perceptronActivation } from '../activation';
 
 const activationFunc = perceptronActivation;
@@ -24,6 +24,21 @@ describe('Perceptron Module', () => {
         });
         expect(perceptron.bias).toBeGreaterThanOrEqual(0);
         expect(perceptron.bias).toBeLessThan(1);
+        expect(perceptron.activationFunc).toBe(activationFunc);
+    });
+
+    it('should initialize a perceptron with xavier distribution and zero biases', () => {
+        const nInputs = 3;
+        const nOutputs = 2;
+        const perceptron = initXavier(nInputs, nOutputs, activationFunc);
+
+        expect(perceptron.weights).toHaveLength(nInputs);
+        const limit = Math.sqrt(6 / (nInputs + nOutputs));
+        perceptron.weights.forEach(weight => {
+            expect(weight).toBeGreaterThanOrEqual(-limit);
+            expect(weight).toBeLessThanOrEqual(limit);
+        });
+        expect(perceptron.bias).toBe(0);
         expect(perceptron.activationFunc).toBe(activationFunc);
     });
 

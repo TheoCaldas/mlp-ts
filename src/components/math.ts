@@ -9,3 +9,7 @@ export const dotProduct = (a: number[], b: number[]) => {
     }
     return sum;
 }
+
+export const initZeroArray = (n: number) => {
+    return Array.from({ length: n }, () => 0);
+}

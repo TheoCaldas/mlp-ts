@@ -21,7 +21,7 @@ export type SLPGradients = {
     hiddenLayerWeights: number[][], //hidden layer weights gradient      
 }
 
-// Initialize a perceptron with given set of perceptrons
+// Initialize a model with given set of perceptrons
 // Inputs and output are undefined at this point
 export const initSLP = (hiddenLayer: Perceptron[], outputLayer: Perceptron): SingleLayerPerceptron =>  {
     const hiddenSize = hiddenLayer.length;
